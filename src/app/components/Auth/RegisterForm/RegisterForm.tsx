@@ -1,16 +1,17 @@
 import { TextField } from '@mui/material';
 import { AuthForm } from '../AuthForm';
+import { register } from '../../../services/authServices';
 
 export const RegisterForm: React.FunctionComponent = () => {
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // const email = e.currentTarget.email.value;
-        // const password = e.currentTarget.password.value;
+        const email = e.currentTarget.email.value;
+        const password = e.currentTarget.password.value;
         // const repeatPassword = e.currentTarget.repeatPassword.value;
 
-        // login(email, password)
+        register(email, password);
       
     };
 

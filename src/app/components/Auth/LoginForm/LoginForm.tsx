@@ -1,16 +1,16 @@
 import { TextField } from '@mui/material';
 import { AuthForm } from '../AuthForm';
+import { login } from '../../../services/authServices';
 
 export const LoginForm: React.FunctionComponent = () => {
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // const email = e.currentTarget.email.value;
-        // const password = e.currentTarget.password.value;
+        const email = e.currentTarget.email.value;
+        const password = e.currentTarget.password.value;
 
-        // const credential = await signInWithEmailAndPassword(auth, email, password);
-
+        login(email, password);
     };
 
     return (

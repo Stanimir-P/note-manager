@@ -1,3 +1,4 @@
+import './App.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { NoteListContent } from './app/components/NoteListContent';
 import { AppHeader } from './app/components/AppHeader';
