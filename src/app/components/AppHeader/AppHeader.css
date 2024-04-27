@@ -1,0 +1,32 @@
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #282c34;
+    height: 3em;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    padding: 0.5em 2em;
+}
+  
+.spacer {
+    flex: 1;
+}
+
+.app-header h3 {
+    flex: 1;
+    text-align: center;
+    font-size: 1.4em;
+}
+
+.user-access {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.user-access a {
+    color: white;
+    margin-left: 1em;
+    font-size: 0.6em;
+}
