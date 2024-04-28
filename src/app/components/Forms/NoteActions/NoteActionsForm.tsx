@@ -3,6 +3,7 @@ import { Button, Input, TextField } from '@mui/material';
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { createNoteThunk, editNoteThunk } from "../../../store/slices/noteList/noteListSlice";
 import { RootState } from "../../../store";
+import { validateNote } from "../../../utils/helperFunctions";
 
 interface INoteActionsForm {
     noteId?: string;
@@ -21,6 +22,13 @@ export const NoteActionsForm: React.FunctionComponent<INoteActionsForm> = props 
         const title: string = e.currentTarget.noteTitle.value;
         const content: string = e.currentTarget.noteContent.value;
         const payload = { title, content, userId, onFormClose: props.onClose };
+
+        const errorMessage = validateNote(title, content);
+
+        if (errorMessage) {
+            alert(errorMessage);
+            return;
+        }
 
         if (props.noteId) {
             dispatch(editNoteThunk({...payload, noteId: props.noteId}));

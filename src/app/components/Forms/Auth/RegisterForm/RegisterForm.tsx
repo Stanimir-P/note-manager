@@ -3,6 +3,7 @@ import { AuthForm } from '../AuthForm';
 import { useAppDispatch } from '../../../../store/hooks';
 import { IAuthPayload, registerThunk } from '../../../../store/slices/auth/authSlice';
 import { useRef } from 'react';
+import { authValidate } from '../../../../utils/helperFunctions';
 
 export const RegisterForm: React.FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -14,9 +15,17 @@ export const RegisterForm: React.FunctionComponent = () => {
 
         const email = e.currentTarget.email.value;
         const password = e.currentTarget.password.value;
-        // const repeatPassword = e.currentTarget.repeatPassword.value;
-
+        const repeatPassword = e.currentTarget.repeatPassword.value;
         const payload: IAuthPayload = { email, password, formRef };
+
+        const formError = authValidate(email, password, repeatPassword);
+
+        if (formError) {
+            alert(formError)
+            return;
+        }
+
+
 
         dispatch(registerThunk(payload));
     };

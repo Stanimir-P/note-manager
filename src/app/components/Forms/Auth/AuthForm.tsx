@@ -19,10 +19,6 @@ export const AuthForm: React.FunctionComponent<IAuthFormProps> = props => {
 
                 {props.children}
 
-                <div className="error-wrapper">
-                    <div className="error-message"></div>
-                </div>
-
                 <Button 
                     size="large" 
                     variant="contained"

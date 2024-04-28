@@ -68,6 +68,9 @@ export const authSlice = createSlice({
 
     builder.addCase(registerThunk.rejected, (state, action) => {
         state.error = action.error.message;
+        if (action.error.message?.search("already-in-use")) {
+            alert("Account already exists!");
+        }
     })
 
     builder.addCase(loginThunk.fulfilled, (state, action) => {

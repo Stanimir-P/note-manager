@@ -30,6 +30,7 @@ export const NoteTileFooter: React.FunctionComponent<INoteTileFooter> = props =>
 
     const onDeleteHandler = () => {
         if (!userId) { return; }
+
         dispatch(deleteNoteThunk({userId, noteId: props.noteId}))
     };
 

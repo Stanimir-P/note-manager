@@ -3,6 +3,7 @@ import { AuthForm } from '../AuthForm';
 import { useAppDispatch } from '../../../../store/hooks';
 import { IAuthPayload, loginThunk } from '../../../../store/slices/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { authValidate } from '../../../../utils/helperFunctions';
 
 export const LoginForm: React.FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -14,6 +15,13 @@ export const LoginForm: React.FunctionComponent = () => {
         const email = e.currentTarget.email.value;
         const password = e.currentTarget.password.value;
         const payload: IAuthPayload = { email, password, navigate };
+
+        const formError = authValidate(email, password);
+
+        if (formError) {
+            alert(formError)
+            return;
+        }
 
         dispatch(loginThunk(payload));
     };

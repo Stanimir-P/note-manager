@@ -51,8 +51,7 @@ export const editNoteThunk = createAsyncThunk(
     const { title, content, userId, noteId, onFormClose } = payload;
     const date = getDate();
     
-    const response = await editNote(title, content, userId, noteId);
-    console.log(response);
+    await editNote(title, content, userId, noteId);
     
     const updatedNote = { title, content, lastModified: date, id: noteId }
     
@@ -65,8 +64,7 @@ export const deleteNoteThunk = createAsyncThunk(
   async (payload: { userId: string, noteId: string }) => {
     const { userId, noteId } = payload;
     
-    const response = await deleteNote(userId, noteId);
-    console.log(response);
+    await deleteNote(userId, noteId);
     
     return { noteId };
   },
@@ -120,7 +118,7 @@ export const noteListSlice = createSlice({
       const noteIndex = state.data.findIndex(findNote);
       state.data[noteIndex] = action.payload.updatedNote;
       
-      alert(`Note "${action.payload.updatedNote.title}" has been updated!`);
+      alert(`Note has been updated!`);
       action.payload.onFormClose();
     })
 
