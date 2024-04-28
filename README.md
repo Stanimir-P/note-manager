@@ -1,5 +1,6 @@
 # Run guide
 
+- Run project: npm run dev
 - Create account with random email and password (should be at least 6 symbols). E.g. acc: example@gmail.com pass: example1
 - Login into the created account
 - Create Note
