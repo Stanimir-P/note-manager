@@ -1,4 +1,6 @@
 import "./CreateNoteForm.css";
+import { useRef } from "react";
+import { createNote } from "../../services/dataServices";
 import { Button, Input, TextField } from '@mui/material';
 
 interface ICreateNoteForm {
@@ -6,13 +8,28 @@ interface ICreateNoteForm {
 }
 
 export const CreateNoteForm: React.FunctionComponent<ICreateNoteForm> = props => {
+    const formRef = useRef(null);
+    
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const title = e.currentTarget.noteTitle.value;
+        const content = e.currentTarget.noteContent.value;
+
+        createNote(title, content);
+        
+        if (formRef) {
+            (formRef as unknown as HTMLFormElement).current.reset();
+        }
+    };
+
     return (
         <div className="form-wrapper">
-            <form className="form" onSubmit={console.log}>
+            <form className="form" ref={formRef} onSubmit={onSubmit}>
                 <h2>Create Note</h2>
 
                 <TextField
-                    name="title"
+                    name="noteTitle"
                     label="Title"
                     variant="standard"
                     fullWidth
@@ -20,6 +37,7 @@ export const CreateNoteForm: React.FunctionComponent<ICreateNoteForm> = props =>
                 />
 
                 <Input 
+                    name="noteContent"
                     minRows={5}
                     maxRows={5}
                     multiline 
