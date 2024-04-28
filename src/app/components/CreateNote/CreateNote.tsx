@@ -2,7 +2,7 @@ import React from "react";
 import "./CreateNote.css";
 import { Backdrop, Button } from '@mui/material';
 import { colorPalette } from "../../utils/colorPalette";
-import { CreateNoteForm } from "./CreateNoteForm";
+import { NoteActionsForm } from "../Forms/NoteActions/NoteActionsForm";
 
 const buttonClass = {
     backgroundColor: colorPalette.main,
@@ -38,7 +38,7 @@ export const CreateNote: React.FunctionComponent = () => {
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={isOpen}
             >
-                <CreateNoteForm onClose={handleClose} />
+                <NoteActionsForm formType="create" onClose={handleClose} />
             </Backdrop>
         </div>
     )

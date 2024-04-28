@@ -1,22 +1,27 @@
-import "./CreateNoteForm.css";
+import "./NoteActionsForm.css";
 import { useRef } from "react";
-import { createNote } from "../../services/dataServices";
+import { createNote, editNote } from "../../../services/dataServices";
 import { Button, Input, TextField } from '@mui/material';
 
-interface ICreateNoteForm {
+interface INoteActionsForm {
+    formType: 'create' | 'edit';
     onClose: () => void;
 }
 
-export const CreateNoteForm: React.FunctionComponent<ICreateNoteForm> = props => {
+export const NoteActionsForm: React.FunctionComponent<INoteActionsForm> = props => {
     const formRef = useRef(null);
     
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const title = e.currentTarget.noteTitle.value;
         const content = e.currentTarget.noteContent.value;
 
-        createNote(title, content);
+        if (props.formType === 'create') {
+            createNote(title, content)
+        } else {
+            editNote(title, content)
+        }
         
         if (formRef) {
             (formRef as unknown as HTMLFormElement).current.reset();
@@ -26,7 +31,10 @@ export const CreateNoteForm: React.FunctionComponent<ICreateNoteForm> = props =>
     return (
         <div className="form-wrapper">
             <form className="form" ref={formRef} onSubmit={onSubmit}>
-                <h2>Create Note</h2>
+                {props.formType === 'create' 
+                    ? <h2>Create Note</h2>
+                    : <h2>Edit Note</h2>
+                }
 
                 <TextField
                     name="noteTitle"
@@ -50,14 +58,14 @@ export const CreateNoteForm: React.FunctionComponent<ICreateNoteForm> = props =>
                     <div className="error-message"></div>
                 </div>
 
-                <div className="create-note-footer">
+                <div className="note-form-footer">
                     <Button 
                         size="large" 
                         variant="contained"
                         type="submit"
                         className="form-btn"
                     >
-                        Create
+                        {props.formType}
                     </Button>
 
                     <Button 

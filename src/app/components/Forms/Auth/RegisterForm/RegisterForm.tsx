@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import { AuthForm } from '../AuthForm';
-import { register } from '../../../services/authServices';
+import { register } from '../../../../services/authServices';
 
 export const RegisterForm: React.FunctionComponent = () => {
 

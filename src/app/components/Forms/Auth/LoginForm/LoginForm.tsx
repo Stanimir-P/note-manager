@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import { AuthForm } from '../AuthForm';
-import { login } from '../../../services/authServices';
+import { login } from '../../../../services/authServices';
 
 export const LoginForm: React.FunctionComponent = () => {
 
