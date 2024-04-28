@@ -1,21 +1,14 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { UserCredential, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { redirect } from "react-router-dom";
 
-export const register = (email: string, password: string) => {
-    createUserWithEmailAndPassword(auth, email, password)
-        .then(() => redirect("/"))
-        .catch(err => console.log(err));
+export const register = (email: string, password: string): Promise<UserCredential> => {
+    return createUserWithEmailAndPassword(auth, email, password);
   };
   
-  export const login = (email: string, password: string) => {
-    signInWithEmailAndPassword(auth, email, password)
-        .then((result) => console.log(result))
-        .catch(err => console.log(err));
-  };
-  
-  export const logout = () => {
-    auth.signOut();
-  
-    return redirect("/login");
-  };
+export const login = (email: string, password: string): Promise<UserCredential>  => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
+
+export const logout = (): void => {
+  auth.signOut();
+};

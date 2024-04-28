@@ -1,50 +1,40 @@
 import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { INote } from "../../utils/interfaces";
 import { getDate } from "../../utils/helperFunctions";
 
-export const getNoteList = (userId: string): INote[] => {
+export const getNoteList = (userId: string) => {
   const noteListRef = collection(db, userId);
-  const noteList: any[] = []; // CHANGE TYPE
 
-  getDocs(noteListRef)
-    .then(snapshot => {
-      snapshot.forEach(note => noteList.push({ ...note.data(), id: note.id }));
-    })
-    .catch(err => console.log(err.message));
-
-  return noteList;
+  return getDocs(noteListRef);
 }
 
-export const createNote = (title: string, content: string) => {
+export const createNote = (title: string, content: string, userId: string) => {
   const date = getDate();
-  const noteListRef = collection(db, 'asd');
+  
+  const noteListRef = collection(db, userId);
 
-  addDoc(noteListRef, {
+  return addDoc(noteListRef, {
     title,
     content,
-    date
-  })
-  .then((result) => {
-    console.log(result);
+    lastModified: date
   })
 }
 
-export const deleteNote = () => {
-  const noteRef = doc(db, 'asd', 'eMCntj5QuWjyMQPHmFzd');
-
-  deleteDoc(noteRef)
-    .then(() => {})
-}
-
-export const editNote = (title: string, content: string) => {
-  const noteRef = doc(db, 'asd', 'fbjpBpD38JREESHmsydr');
+export const editNote = (title: string, content: string, userId: string, noteId: string) => {
+  const noteRef = doc(db, userId, noteId);
 
   const date = getDate();
 
-  updateDoc(noteRef, {
+  return updateDoc(noteRef, {
     title,
     content,
-    date
+    lastModified: date
   });
 }
+
+export const deleteNote = (userId: string, noteId: string) => {
+  const noteRef = doc(db, userId, noteId);
+
+  return deleteDoc(noteRef);
+}
+

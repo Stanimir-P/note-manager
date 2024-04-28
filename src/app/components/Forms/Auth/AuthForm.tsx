@@ -1,11 +1,12 @@
 import './AuthForm.css';
-import { ReactNode } from 'react';
+import { ReactNode, RefObject } from 'react';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 interface IAuthFormProps {
   title: string;
   submitText: string;
+  formRef?: RefObject<HTMLFormElement>;
   children: ReactNode;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
@@ -13,7 +14,7 @@ interface IAuthFormProps {
 export const AuthForm: React.FunctionComponent<IAuthFormProps> = props => {
     return (
         <div className="form-wrapper">
-            <form className="form" onSubmit={props.onSubmit}>
+            <form className="form" ref={props.formRef} onSubmit={props.onSubmit}>
                 <h2>{props.title.toUpperCase()}</h2>
 
                 {props.children}

@@ -1,39 +1,40 @@
 import "./NoteActionsForm.css";
-import { useRef } from "react";
-import { createNote, editNote } from "../../../services/dataServices";
 import { Button, Input, TextField } from '@mui/material';
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { createNoteThunk, editNoteThunk } from "../../../store/slices/noteList/noteListSlice";
+import { RootState } from "../../../store";
 
 interface INoteActionsForm {
-    formType: 'create' | 'edit';
+    noteId?: string;
     onClose: () => void;
 }
 
 export const NoteActionsForm: React.FunctionComponent<INoteActionsForm> = props => {
-    const formRef = useRef(null);
+    const dispatch = useAppDispatch();
+    const userId = useAppSelector((state: RootState) => state.auth.userId);
     
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const title = e.currentTarget.noteTitle.value;
-        const content = e.currentTarget.noteContent.value;
+        if (!userId) { return; }
 
-        if (props.formType === 'create') {
-            createNote(title, content)
+        const title: string = e.currentTarget.noteTitle.value;
+        const content: string = e.currentTarget.noteContent.value;
+        const payload = { title, content, userId, onFormClose: props.onClose };
+
+        if (props.noteId) {
+            dispatch(editNoteThunk({...payload, noteId: props.noteId}));
         } else {
-            editNote(title, content)
-        }
-        
-        if (formRef) {
-            (formRef as unknown as HTMLFormElement).current.reset();
+            dispatch(createNoteThunk(payload));
         }
     };
 
     return (
         <div className="form-wrapper">
-            <form className="form" ref={formRef} onSubmit={onSubmit}>
-                {props.formType === 'create' 
-                    ? <h2>Create Note</h2>
-                    : <h2>Edit Note</h2>
+            <form className="form" onSubmit={onSubmit}>
+                {props.noteId 
+                    ? <h2>Edit Note</h2>
+                    : <h2>Create Note</h2>
                 }
 
                 <TextField
@@ -65,7 +66,7 @@ export const NoteActionsForm: React.FunctionComponent<INoteActionsForm> = props 
                         type="submit"
                         className="form-btn"
                     >
-                        {props.formType}
+                        {props.noteId ? 'edit' : 'create'}
                     </Button>
 
                     <Button 

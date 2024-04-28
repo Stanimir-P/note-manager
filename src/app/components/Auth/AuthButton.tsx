@@ -14,6 +14,7 @@ const buttonClass = {
 interface IAuthButton {
     title: string;
     path?: string;
+    onClick?: () => void;
 }
 
 export const AuthButton: React.FunctionComponent<IAuthButton> = props => {
@@ -22,6 +23,7 @@ export const AuthButton: React.FunctionComponent<IAuthButton> = props => {
             variant="outlined"
             sx={buttonClass}
             href={props.path && `/${props.path}`}
+            onClick={props.onClick}
         >
             {props.title}
         </Button>

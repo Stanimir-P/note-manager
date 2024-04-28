@@ -5,12 +5,19 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Backdrop } from '@mui/material';
 import { NoteActionsForm } from '../Forms/NoteActions';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { deleteNoteThunk } from '../../store/slices/noteList/noteListSlice';
+import { RootState } from '../../store';
 
 interface INoteTileFooter {
     date: string;
+    noteId: string;
 }
 
 export const NoteTileFooter: React.FunctionComponent<INoteTileFooter> = props => {
+    const dispatch = useAppDispatch();
+    const userId = useAppSelector((state: RootState) => state.auth.userId);
+
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
   
     const handleClose = (): void => {
@@ -22,8 +29,9 @@ export const NoteTileFooter: React.FunctionComponent<INoteTileFooter> = props =>
     };
 
     const onDeleteHandler = () => {
-        console.log('delete');
-    }
+        if (!userId) { return; }
+        dispatch(deleteNoteThunk({userId, noteId: props.noteId}))
+    };
 
     return (
         <div className='note-footer'>
@@ -51,7 +59,7 @@ export const NoteTileFooter: React.FunctionComponent<INoteTileFooter> = props =>
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={isOpen}
             >
-                <NoteActionsForm formType="edit" onClose={handleClose} />
+                <NoteActionsForm noteId={props.noteId} onClose={handleClose} />
             </Backdrop>
         </div>
     )

@@ -1,8 +1,13 @@
 import { TextField } from '@mui/material';
 import { AuthForm } from '../AuthForm';
-import { register } from '../../../../services/authServices';
+import { useAppDispatch } from '../../../../store/hooks';
+import { IAuthPayload, registerThunk } from '../../../../store/slices/auth/authSlice';
+import { useRef } from 'react';
 
 export const RegisterForm: React.FunctionComponent = () => {
+    const dispatch = useAppDispatch();
+    const formRef = useRef<HTMLFormElement | null>(null);
+
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -11,14 +16,16 @@ export const RegisterForm: React.FunctionComponent = () => {
         const password = e.currentTarget.password.value;
         // const repeatPassword = e.currentTarget.repeatPassword.value;
 
-        register(email, password);
-      
+        const payload: IAuthPayload = { email, password, formRef };
+
+        dispatch(registerThunk(payload));
     };
 
     return (
         <AuthForm
             title="register"
             submitText="register"
+            formRef={formRef}
             onSubmit={onSubmit}
         >
             <TextField

@@ -26,7 +26,12 @@
 }
 
 .user-access a {
-    color: white;
     margin-left: 1em;
+    font-size: 0.6em;
+}
+
+.user-access span {
+    display: flex;
+    align-self: center;
     font-size: 0.6em;
 }

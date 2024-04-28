@@ -5,20 +5,20 @@ interface INoteTile {
     title: string;
     content: string;
     date: string;
+    id: string;
 }
 
 export const NoteTile: React.FunctionComponent<INoteTile> = props => {
-    const {title, content, date} = props;
 
     return (
         <div className='note-tile'>
             <div className='note-title'>
-                <h3>{title}</h3>
+                <h3>{props.title}</h3>
             </div>
 
-            <p>{content}</p>
+            <p>{props.content}</p>
             
-            <NoteTileFooter date={date} />
+            <NoteTileFooter noteId={props.id} date={props.date} />
         </div>
     )
 }

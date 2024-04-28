@@ -38,7 +38,7 @@ export const CreateNote: React.FunctionComponent = () => {
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={isOpen}
             >
-                <NoteActionsForm formType="create" onClose={handleClose} />
+                <NoteActionsForm onClose={handleClose} />
             </Backdrop>
         </div>
     )

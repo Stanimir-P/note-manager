@@ -1,3 +1,7 @@
 .note-list {
     display: flex;
 }
+
+.note-list span {
+    margin-left: 2em;
+}

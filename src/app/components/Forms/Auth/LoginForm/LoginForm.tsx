@@ -1,16 +1,21 @@
 import { TextField } from '@mui/material';
 import { AuthForm } from '../AuthForm';
-import { login } from '../../../../services/authServices';
+import { useAppDispatch } from '../../../../store/hooks';
+import { IAuthPayload, loginThunk } from '../../../../store/slices/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginForm: React.FunctionComponent = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const email = e.currentTarget.email.value;
         const password = e.currentTarget.password.value;
+        const payload: IAuthPayload = { email, password, navigate };
 
-        login(email, password);
+        dispatch(loginThunk(payload));
     };
 
     return (
